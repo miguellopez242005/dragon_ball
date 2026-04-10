@@ -1,0 +1,11 @@
+package com.catalogo.dragon_ball.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.catalogo.dragon_ball.entity.DetalleVenta;
+
+@Repository
+public interface DeatlleVentaRepository extends JpaRepository<DetalleVenta, Integer> {
+}
