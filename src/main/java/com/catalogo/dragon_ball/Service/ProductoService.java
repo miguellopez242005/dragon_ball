@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 @Service
@@ -15,8 +16,22 @@ public class ProductoService {
     private final ProductoRepository productoRepository;
 
     public ProductoDTO crearproducto(ProductoDTO productoRequestDTO){
-        Producto producto= new Producto();
-        
+
+
+         if (productoRequestDTO.getNombre()==null || productoRequestDTO.getNombre().trim().isEmpty()) {
+        throw new IllegalArgumentException("Por favor, coloquele un nombre a su producto");
+        }
+         if (productoRequestDTO.getPrecio() == null || productoRequestDTO.getPrecio().compareTo(BigDecimal.ZERO) <= 0) {
+             throw new IllegalArgumentException("El precio debe de ser mayor a 0");
+        }
+        if (productoRequestDTO.getStock() == null || productoRequestDTO.getStock() < 0) {
+        throw new IllegalArgumentException("El stock debe de ser mayor a 0");
+        }
+         if (productoRepository.findByNombre(productoRequestDTO.getNombre()).isPresent()) {
+            throw new IllegalArgumentException("Ya existe un producto con ese nombre");
+        }
+
+        Producto producto= new Producto();    
         producto.setNombre(productoRequestDTO.getNombre());
         producto.setStock(productoRequestDTO.getStock());
         producto.setPrecio(productoRequestDTO.getPrecio());
@@ -48,6 +63,11 @@ public class ProductoService {
     }
 
         public Optional<ProductoDTO> obtenerProductos(String nombre) {
+
+         if (nombre == null || nombre.trim().isEmpty()) {
+         throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+
         Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
 
         if(productoOptional.isPresent()) {
@@ -63,10 +83,20 @@ public class ProductoService {
             return Optional.empty();
         }
     }
-
     
     public Optional<ProductoDTO> actualizarProducto(String nombre, ProductoDTO productoRequestDTO) {
         Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
+
+        if (productoRequestDTO.getNombre()==null || productoRequestDTO.getNombre().trim().isEmpty()) {
+        throw new IllegalArgumentException("Por favor, coloquele un nombre a su producto");
+        }
+         if (productoRequestDTO.getPrecio() == null || productoRequestDTO.getPrecio().compareTo(BigDecimal.ZERO) <= 0) {
+             throw new IllegalArgumentException("El precio debe de ser mayor a 0");
+        }
+        if (productoRequestDTO.getStock() == null || productoRequestDTO.getStock() < 0) {
+        throw new IllegalArgumentException("El stock debe de ser mayor a 0");
+        }
+
         if(productoOptional.isPresent()) {
             Producto producto = productoOptional.get();
             producto.setNombre(productoRequestDTO.getNombre());
@@ -87,8 +117,12 @@ public class ProductoService {
         }
     }
     public Optional<ProductoDTO> eliminarProducto(String nombre) {
-    Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
 
+     if (nombre == null || nombre.trim().isEmpty()) {
+     throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        
+    Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
     if (productoOptional.isPresent()) {
         Producto producto = productoOptional.get();
 
