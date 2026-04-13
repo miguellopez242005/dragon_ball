@@ -13,5 +13,4 @@ public class DetalleVentaResponseDTO {
     private String nombreProducto;
     private Integer cantidad;
     private BigDecimal precio;
-    private BigDecimal subtotal;
 }

@@ -1,7 +1,8 @@
 package com.catalogo.dragon_ball.controller;
 
 import com.catalogo.dragon_ball.dto.ProductoDTO;
-import com.catalogo.dragon_ball.Service.ProductoService;
+import com.catalogo.dragon_ball.service.ProductoService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Producto")
+@RequestMapping("/api/Producto")
 public class ProductoController {
     private final ProductoService productoService;
         @PostMapping

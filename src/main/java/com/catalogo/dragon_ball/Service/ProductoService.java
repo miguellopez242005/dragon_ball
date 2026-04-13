@@ -1,4 +1,4 @@
-package com.catalogo.dragon_ball.Service;
+package com.catalogo.dragon_ball.service;
 import com.catalogo.dragon_ball.dto.ProductoDTO;
 import com.catalogo.dragon_ball.entity.Producto;
 import com.catalogo.dragon_ball.repository.ProductoRepository;

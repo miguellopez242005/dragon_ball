@@ -1,15 +1,13 @@
 package com.catalogo.dragon_ball.dto;
 
+import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioRequestDTO {
+public class RolDTO {
+    private Long id;
     private String nombre;
-    private String email;
-    private String password;
-    private Long idRol;
 }
