@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.catalogo.dragon_ball.entity.Producto;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+public interface ProductoRepository extends JpaRepository<Producto, Long> {
     Optional <Producto> findByNombre(String nombre);
 }

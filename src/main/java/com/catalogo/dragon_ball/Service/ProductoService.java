@@ -62,13 +62,13 @@ public class ProductoService {
         return listaProductos;
     }
 
-        public Optional<ProductoDTO> obtenerProductos(String nombre) {
+        public Optional<ProductoDTO> obtenerProductos(Long id) {
 
-         if (nombre == null || nombre.trim().isEmpty()) {
-         throw new IllegalArgumentException("El nombre no puede estar vacío");
+         if (id == null || id <=0) {
+         throw new IllegalArgumentException("El id no puede estar vacío ni ser menor que 0");
         }
 
-        Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
+        Optional<Producto> productoOptional = productoRepository.findById(id);
 
         if(productoOptional.isPresent()) {
             Producto producto = productoOptional.get();
@@ -84,8 +84,8 @@ public class ProductoService {
         }
     }
     
-    public Optional<ProductoDTO> actualizarProducto(String nombre, ProductoDTO productoRequestDTO) {
-        Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
+    public Optional<ProductoDTO> actualizarProducto(Long id, ProductoDTO productoRequestDTO) {
+        Optional<Producto> productoOptional = productoRepository.findById(id);
 
         if (productoRequestDTO.getNombre()==null || productoRequestDTO.getNombre().trim().isEmpty()) {
         throw new IllegalArgumentException("Por favor, coloquele un nombre a su producto");
@@ -116,13 +116,13 @@ public class ProductoService {
             return Optional.empty();
         }
     }
-    public Optional<ProductoDTO> eliminarProducto(String nombre) {
+    public Optional<ProductoDTO> eliminarProducto(Long id) {
 
-     if (nombre == null || nombre.trim().isEmpty()) {
-     throw new IllegalArgumentException("El nombre no puede estar vacío");
+         if (id == null || id <=0) {
+         throw new IllegalArgumentException("El id no puede estar vacío ni ser menor que 0");
         }
-        
-    Optional<Producto> productoOptional = productoRepository.findByNombre(nombre);
+
+    Optional<Producto> productoOptional = productoRepository.findById(id);
     if (productoOptional.isPresent()) {
         Producto producto = productoOptional.get();
 

@@ -21,31 +21,31 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
         @GetMapping
-    public ResponseEntity<List<ProductoDTO>> listarproductos() {
+    public ResponseEntity<List<ProductoDTO>> obtenerproductos() {
         List<ProductoDTO> listarproductos = productoService.obtenerProductos();
         return ResponseEntity.status(HttpStatus.FOUND).body(listarproductos);
     }
- @GetMapping("/{nombre}")
-    public ResponseEntity<ProductoDTO> obtenerProducto(@PathVariable String nombre) {
-        ProductoDTO response = productoService.obtenerProductos(nombre).orElse(null);
+ @GetMapping("/{id}")
+    public ResponseEntity<ProductoDTO> obtenerProductoporid(@PathVariable Long id) {
+        ProductoDTO response = productoService.obtenerProductos(id).orElse(null);
         if (response != null) {
             return ResponseEntity.status(HttpStatus.FOUND).body(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-     @PutMapping("/{nombre}")
-    public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable String nombre, @RequestBody ProductoDTO productoRequestDTO) {
-        ProductoDTO response = productoService.actualizarProducto(nombre, productoRequestDTO).orElse(null);
+     @PutMapping("/{id}")
+    public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable Long id, @RequestBody ProductoDTO productoRequestDTO) {
+        ProductoDTO response = productoService.actualizarProducto(id, productoRequestDTO).orElse(null);
         if (response != null) {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @DeleteMapping("/{nombre}")
-    public ResponseEntity<ProductoDTO> eliminarProducto(@PathVariable String nombre){
-        ProductoDTO response= productoService.eliminarProducto(nombre).orElse(null);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProductoDTO> eliminarProducto(@PathVariable Long id){
+        ProductoDTO response= productoService.eliminarProducto(id).orElse(null);
         if (response !=null) {
             return ResponseEntity.status(HttpStatus.OK).body(response);   
         }else{

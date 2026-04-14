@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DetalleVentaResponseDTO {
     private String nombreProducto;
-    private Integer cantidad;
+    private Long cantidad;
     private BigDecimal precio;
 }
