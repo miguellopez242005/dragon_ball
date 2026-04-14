@@ -7,6 +7,7 @@ import com.catalogo.dragon_ball.entity.Users;
 import com.catalogo.dragon_ball.repository.RolRepository;
 import com.catalogo.dragon_ball.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,14 +16,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
+    private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository UsuarioRepository;
     private final RolRepository rolRepository;
+
 
     public UsuarioResponseDTO crearUsuario(UsuarioRequestDTO dto) {
         Users usuario = new Users();
         usuario.setName(dto.getNombre());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword().toString());
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword().toString()));
         
         Roles rolExistente = rolRepository.findById(dto.getIdRol())
             .orElseThrow(() -> new RuntimeException("Error: El rol no existe en la tienda"));
@@ -62,7 +65,7 @@ public class UsuarioService {
             
             usuario.setName(dto.getNombre());
             usuario.setEmail(dto.getEmail());
-            usuario.setPassword(dto.getPassword().toString()); 
+            usuario.setPassword(passwordEncoder.encode(dto.getPassword().toString())); 
 
             UsuarioRepository.save(usuario);
             return Optional.of(mapearADTO(usuario));
