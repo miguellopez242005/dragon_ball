@@ -20,9 +20,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // OBLIGATORIO para que Postman funcione
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Aquí le das permiso al primer guardia para dejarte pasar a crear usuarios
                 .requestMatchers("/api/usuarios/**").permitAll() 
                 .requestMatchers("/api/auth/**").permitAll() 
                 .anyRequest().authenticated()

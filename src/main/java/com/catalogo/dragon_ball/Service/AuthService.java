@@ -7,6 +7,8 @@ import com.catalogo.dragon_ball.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +23,10 @@ public class AuthService {
         
         if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(),userOpt.get().getPassword())) {
             Users user = userOpt.get();
-            String token = jwtService.generateToken(user.getId(), user.getName());
+            
+            List<String> roles = List.of(user.getRol().getNombre());
+            
+            String token = jwtService.generateToken(user.getId(), user.getName(), roles);
             
             return Optional.of(new AuthResponseDTO(
                 token, 

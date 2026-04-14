@@ -24,7 +24,7 @@ public class DataLoader implements CommandLineRunner {
             cliente.setNombre("CLIENTE");
             rolRepository.save(cliente);
             
-            System.out.println("✅ Roles iniciales creados en la base de datos.");
+            System.out.println("Roles iniciales creados en la base de datos.");
         }
     }
 }
