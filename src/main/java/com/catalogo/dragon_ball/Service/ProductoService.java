@@ -35,6 +35,7 @@ public class ProductoService {
         producto.setNombre(productoRequestDTO.getNombre());
         producto.setStock(productoRequestDTO.getStock());
         producto.setPrecio(productoRequestDTO.getPrecio());
+        producto.setDescripcion(productoRequestDTO.getDescripcion());
 
         productoRepository.save(producto);
 
@@ -43,6 +44,7 @@ public class ProductoService {
         response.setNombre(productoRequestDTO.getNombre());
         response.setStock(productoRequestDTO.getStock());
         response.setPrecio(productoRequestDTO.getPrecio());
+        response.setDescripcion(productoRequestDTO.getDescripcion());
 
         return response;
 
@@ -57,6 +59,7 @@ public class ProductoService {
             producto.setNombre(p.getNombre());
             producto.setStock(p.getStock());
             producto.setPrecio(p.getPrecio());
+            producto.setDescripcion(p.getDescripcion());
             listaProductos.add(producto);
         }
         return listaProductos;
@@ -77,6 +80,7 @@ public class ProductoService {
             response.setNombre(producto.getNombre());
             response.setStock(producto.getStock());
             response.setPrecio(producto.getPrecio());
+            response.setDescripcion(producto.getDescripcion());
 
             return Optional.of(response);
         } else {
@@ -102,6 +106,7 @@ public class ProductoService {
             producto.setNombre(productoRequestDTO.getNombre());
             producto.setStock(productoRequestDTO.getStock());
             producto.setPrecio(productoRequestDTO.getPrecio());
+            producto.setDescripcion(productoRequestDTO.getDescripcion());
 
             Producto productoActualizado = productoRepository.save(producto);
 
@@ -110,6 +115,7 @@ public class ProductoService {
             response.setNombre(productoActualizado.getNombre());
             response.setStock(productoActualizado.getStock());
             response.setPrecio(productoActualizado.getPrecio());
+            response.setDescripcion(productoActualizado.getDescripcion());
 
             return Optional.of(response);
         } else {
@@ -131,6 +137,7 @@ public class ProductoService {
         response.setNombre(producto.getNombre());
         response.setPrecio(producto.getPrecio());
         response.setStock(producto.getStock());
+        response.setDescripcion(producto.getDescripcion());
 
         productoRepository.delete(producto);
         return Optional.of(response);
