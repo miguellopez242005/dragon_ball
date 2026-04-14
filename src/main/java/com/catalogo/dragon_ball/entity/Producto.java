@@ -22,4 +22,6 @@ public class Producto {
     @Column(name = "stock")
     private Long stock;
 
+    @Column(name = "descripcion")
+    private String descripcion;
     }
