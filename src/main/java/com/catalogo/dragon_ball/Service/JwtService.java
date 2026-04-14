@@ -1,6 +1,7 @@
 package com.catalogo.dragon_ball.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
@@ -13,13 +14,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-/**
- * Servicio encargado de la gestión de JSON Web Tokens (JWT).
- */
+
 @Service
 public class JwtService {
 
-    // Se inyectan desde application.properties
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
@@ -27,11 +25,14 @@ public class JwtService {
     private Long tokenExpiration;
 
     /**
-     * Genera un nuevo token JWT para un usuario.
+     * Genera un nuevo token JWT incluyendo la lista de roles (authorities).
      */
-    public String generateToken(Long userId, String username) {
+    public String generateToken(Long userId, String username, List<String> roles) {
         return Jwts.builder()
-                .claims(Map.of("userId", userId)) 
+                .claims(Map.of(
+                    "userId", userId,
+                    "authorities", roles 
+                )) 
                 .subject(username) 
                 .issuedAt(new Date()) 
                 .expiration(new Date(System.currentTimeMillis() + tokenExpiration)) 
@@ -39,17 +40,11 @@ public class JwtService {
                 .compact(); 
     }
 
-    /**
-     * Convierte la clave secreta de String a SecretKey.
-     */
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    /**
-     * Valida que el token no haya sido alterado y sea vigente.
-     */
     public Boolean isTokenValid(String token) {
         try {
             Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
@@ -59,9 +54,6 @@ public class JwtService {
         }
     }
 
-    /**
-     * Extrae información específica (Claims) del token.
-     */
     public <T> T exctractClaims(String token, Function<Claims, T> resolver) {
         final Claims claims = Jwts.parser()
             .verifyWith(getSigningKey())
@@ -80,8 +72,12 @@ public class JwtService {
         return exctractClaims(token, claims -> claims.get("userId", Long.class));
     }
 
+    public List<String> extractRoles(String token) {
+        return exctractClaims(token, claims -> claims.get("authorities", List.class));
+    }
+
     /**
-     * Permite renovar un token aunque esté vencido (Lógica del instructor).
+     * Refresca el token recuperando los roles del token anterior.
      */
     public String refreshToken(String token) {
         Claims claims;
@@ -97,6 +93,8 @@ public class JwtService {
             throw new RuntimeException("El token es inválido o ha sido manipulado");
         }
 
-        return generateToken(claims.get("userId", Long.class), claims.getSubject());
+        List<String> roles = claims.get("authorities", List.class);
+
+        return generateToken(claims.get("userId", Long.class), claims.getSubject(), roles);
     }
 }

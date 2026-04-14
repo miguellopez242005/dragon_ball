@@ -26,7 +26,7 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
     String authHeader = request.getHeader("Authorization");
 
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        filterChain.doFilter(request, response); // Deja pasar para que Spring Security maneje el 403
+        filterChain.doFilter(request, response);
         return;
     }
 
@@ -35,15 +35,12 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
         if (jwtService.isTokenValid(token)) {
             String username = jwtService.extractUsername(token);
             
-            // 1. Crear la autenticación (Lo que quita el 403)
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 username, null, new ArrayList<>()
             );
             
-            // 2. Avisarle a Spring que el usuario es válido
             SecurityContextHolder.getContext().setAuthentication(authToken);
 
-            // 3. Guardar atributos opcianos por si los usas en el Controller
             request.setAttribute("username", username);
             request.setAttribute("userId", jwtService.extractUserId(token));
         }
@@ -51,7 +48,6 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
         System.out.println("Error validando token: " + e.getMessage());
     }
 
-    // 4. SIEMPRE debe ir esto al final para que la petición siga su camino
     filterChain.doFilter(request, response);
 }
 
@@ -59,7 +55,6 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        System.out.println("Ruta recibida por el filtro: " + path);
         return path.contains("/api/usuarios") || path.startsWith("/api/auth/login");
     }
 }
