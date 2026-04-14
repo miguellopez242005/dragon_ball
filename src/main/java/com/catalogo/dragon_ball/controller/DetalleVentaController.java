@@ -2,7 +2,6 @@ package com.catalogo.dragon_ball.controller;
 
 import com.catalogo.dragon_ball.dto.DetalleVentaRequestDTO;
 import com.catalogo.dragon_ball.dto.DetalleVentaResponseDTO;
-import com.catalogo.dragon_ball.dto.ProductoDTO;
 import com.catalogo.dragon_ball.service.DetalleVentaService;
 import lombok.RequiredArgsConstructor;
 
