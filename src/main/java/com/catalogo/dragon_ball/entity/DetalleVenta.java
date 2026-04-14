@@ -22,8 +22,11 @@ public class DetalleVenta {
     private Producto producto;
 
     @Column(name = "cantidad")
-    private Integer cantidad;
+    private Long cantidad;
 
     @Column(name = "precio")
     private BigDecimal precio;
+
+    @Column(name= "estado")
+    private Boolean estado;
 }

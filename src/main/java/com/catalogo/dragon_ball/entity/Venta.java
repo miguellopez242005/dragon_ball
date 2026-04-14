@@ -33,7 +33,6 @@ public class Venta {
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalles;
 
-
 }
 
 
