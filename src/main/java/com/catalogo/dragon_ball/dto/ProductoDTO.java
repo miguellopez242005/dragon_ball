@@ -15,5 +15,4 @@ public class ProductoDTO {
     private String descripcion;
     private BigDecimal precio;
     private Long stock;
-    private String imagenUrl;
 }
