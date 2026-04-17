@@ -27,10 +27,11 @@ public class Venta {
     @Column(name = "total")
     private BigDecimal total;
 
+     
+
     
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalles;
-
 
 }
 

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import com.catalogo.dragon_ball.entity.DetalleVenta;
 
 @Repository
-public interface DeatlleVentaRepository extends JpaRepository<DetalleVenta, Integer> {
+public interface DetalleVentaRepository extends JpaRepository<DetalleVenta, Long> {
 }

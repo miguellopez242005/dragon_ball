@@ -20,5 +20,8 @@ public class Producto {
     private BigDecimal precio;
 
     @Column(name = "stock")
-    private Integer stock;
-}
+    private Long stock;
+
+    @Column(name = "descripcion")
+    private String descripcion;
+    }
