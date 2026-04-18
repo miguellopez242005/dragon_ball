@@ -2,7 +2,7 @@ spring:
   application:
     name: dragon_ball
   datasource:
-    url: jdbc:mysql://localhost:3307/catalogo_dbz?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3307/dragon_ball?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,4 +14,4 @@ spring:
 security:
   jwt:
     secret-key: 586B633A8F3D2E7A1B4C9F0E5D8A2B7C4E6F1A3D9B8C2E5F7A0D3B6C9E2F4A1
-    token-expiration: 60000
+    token-expiration: 600000
